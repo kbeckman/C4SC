@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B81C0A11-6074-4B46-9248-7A5B873E29BE}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		readme.txt = readme.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4SC.Common.WebControls", "C4SC.Common.WebControls\C4SC.Common.WebControls.csproj", "{DCEB406C-8F2B-4D36-945B-24407F73C8E2}"

@@ -12,7 +12,7 @@ namespace C4SC.Common.WebControls.Google
 	/// </summary>
 	[DefaultProperty("AccountId")]
 	[ToolboxData("<{0}:GoogleAnalytics runat=server></{0}:GoogleAnalytics>")]
-	[ToolboxBitmap(typeof(GoogleAnalytics), @"Resources\google.bmp")]
+	[ToolboxBitmap(typeof(GoogleAnalytics), @"GoogleAnalytics.bmp")]
 	public class GoogleAnalytics : WebControl
 	{
 		private static string _googleAnalyticsJavaScript	= String.Empty;
