@@ -23,10 +23,6 @@ namespace C4SC.Common.WebControls.Google
 		/// <summary>
 		/// Google Analytics Account Id.
 		/// </summary>
-		[Bindable(true)]
-		[Category("Google")]
-		[DefaultValue("")]
-		[Localizable(true)]
 		public string AccountId
 		{
 			get { return ((string)ViewState["GoogleAnalyticsAccountId"]); }
@@ -76,7 +72,7 @@ namespace C4SC.Common.WebControls.Google
 			{
 				StringBuilder bldr = new StringBuilder();
 
-				bldr.Append(@"<script type=" + Quote + "text/javascript" + Quote + ">");
+				bldr.AppendLine(@"<script type=" + Quote + "text/javascript" + Quote + ">");
 				bldr.AppendLine(@"    var _gaq = _gaq || [];");
 				bldr.AppendLine(@"    _gaq.push(['_setAccount', '" + AccountId + "']);");
 				bldr.AppendLine(@"    _gaq.push(['_trackPageview']);");
