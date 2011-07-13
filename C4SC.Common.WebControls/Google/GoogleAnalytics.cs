@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -73,20 +74,20 @@ namespace C4SC.Common.WebControls.Google
 		{
 			if (_googleAnalyticsJavaScript.Length == 0)
 			{
-				lock (_lockObject)
-				{
-					_googleAnalyticsJavaScript =
-						@"<script type=" + Quote + "text/javascript" + Quote + ">" +
-						@"	var _gaq = _gaq || [];" + Environment.NewLine +
-						@"	_gaq.push(['_setAccount', '" + AccountId + "']);" + Environment.NewLine +
-						@"	_gaq.push(['_trackPageview']);" + Environment.NewLine +
-						@"	(function() {" + Environment.NewLine +
-						@"	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;" + Environment.NewLine +
-						@"	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';" + Environment.NewLine +
-						@"	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);" + Environment.NewLine +
-						@"	})();" + Environment.NewLine +
-						@"</script>" + Environment.NewLine;
-				}
+				StringBuilder bldr = new StringBuilder();
+
+				bldr.Append(@"<script type=" + Quote + "text/javascript" + Quote + ">");
+				bldr.AppendLine(@"    var _gaq = _gaq || [];");
+				bldr.AppendLine(@"    _gaq.push(['_setAccount', '" + AccountId + "']);");
+				bldr.AppendLine(@"    _gaq.push(['_trackPageview']);");
+				bldr.AppendLine(@"    (function() {");
+				bldr.AppendLine(@"        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;");
+				bldr.AppendLine(@"        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';");
+				bldr.AppendLine(@"        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);");
+				bldr.AppendLine(@"    })();");
+				bldr.AppendLine(@"</script>");
+
+				lock (_lockObject) { _googleAnalyticsJavaScript = bldr.ToString(); }
 			}
 
 			return _googleAnalyticsJavaScript;
