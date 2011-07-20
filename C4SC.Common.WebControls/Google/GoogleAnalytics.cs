@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
@@ -16,18 +17,65 @@ namespace C4SC.Common.WebControls.Google
 	[ToolboxBitmap(typeof(GoogleAnalytics), @"GoogleAnalytics.bmp")]
 	public class GoogleAnalytics : WebControl
 	{
+		#region Member/Type Variables
+		
 		private static string _googleAnalyticsJavaScript	= String.Empty;
 		private static readonly object _lockObject			= new object();
 		private const char Quote							= '"';
+
+		/// <summary>
+		/// Contains the ViewState keys used for GoogleAnalytics.
+		/// </summary>
+		private static class ViewStateKeys
+		{
+			public const string AccountId		= "GoogleAnalytics.AccountId";
+			public const string DomainOption	= "GoogleAnlytics.AccountOption";
+			public const string DomainName		= "GoogleAnalytics.DomainName";
+		}
+
+		/// <summary>
+		/// Contains static options for DomainOption property.
+		/// </summary>
+		private static class DomainOptions
+		{
+			public const string SingleDomain					= "SingleDomain";
+			public const string SingleDomainMultipleSubDomains	= "SingleDomainMultipleSubDomains";
+			public const string MultipleTopLevelDomains			= "MultipleTopLevelDomains";
+			public static readonly IList<string> ValidOptions = new List<string> {SingleDomain, SingleDomainMultipleSubDomains, MultipleTopLevelDomains};
+		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Google Analytics Account Id.
 		/// </summary>
 		public string AccountId
 		{
-			get { return ((string)ViewState["GoogleAnalyticsAccountId"]); }
-			set { ViewState["GoogleAnalyticsAccountId"] = value; }
+			get { return ((string)ViewState[ViewStateKeys.AccountId]); }
+			set { ViewState[ViewStateKeys.AccountId] = value; }
 		}
+
+		/// <summary>
+		/// Google Analytics Domain Option.
+		/// </summary>
+		public string DomainOption
+		{
+			get { return ((string)ViewState[ViewStateKeys.DomainOption]); }
+			set { ViewState[ViewStateKeys.DomainOption] = value; }	
+		}
+
+		/// <summary>
+		/// Google Analytics Domain Name.
+		/// </summary>
+		public string DomainName
+		{
+			get { return ((string)ViewState[ViewStateKeys.DomainName]); }
+			set { ViewState[ViewStateKeys.DomainName] = value; }
+		}
+
+		#endregion
 
 		/// <summary>
 		/// Renders control's begin HTML tag.
@@ -66,15 +114,28 @@ namespace C4SC.Common.WebControls.Google
 		/// Builds the Google Analytics JavaScript block.
 		/// </summary>
 		/// <returns>Google Analytics JavaScript block.</returns>
-		protected string GetGoogleAnalyticsJavaScript()
+		private string GetGoogleAnalyticsJavaScript()
 		{
 			if (_googleAnalyticsJavaScript.Length == 0)
 			{
+				ValidatePropertySettings();
+
 				StringBuilder bldr = new StringBuilder();
 
 				bldr.AppendLine(@"<script type=" + Quote + "text/javascript" + Quote + ">");
 				bldr.AppendLine(@"    var _gaq = _gaq || [];");
 				bldr.AppendLine(@"    _gaq.push(['_setAccount', '" + AccountId + "']);");
+
+				if (DomainOption.Equals(DomainOptions.SingleDomainMultipleSubDomains))
+				{
+					bldr.AppendLine(@"    _gaq.push(['_setDomainName', '" + DomainName + "']);");
+				}
+				else if (DomainOption.Equals(DomainOptions.MultipleTopLevelDomains))
+				{
+					bldr.AppendLine(@"    _gaq.push(['_setDomainName', 'none']);");
+					bldr.AppendLine(@"    _gaq.push(['_setAllowLinker', true]);");
+				}
+
 				bldr.AppendLine(@"    _gaq.push(['_trackPageview']);");
 				bldr.AppendLine(@"    (function() {");
 				bldr.AppendLine(@"        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;");
@@ -87,6 +148,21 @@ namespace C4SC.Common.WebControls.Google
 			}
 
 			return _googleAnalyticsJavaScript;
+		}
+
+		/// <summary>
+		/// Validates control's property settings to ensure proper configuration.
+		/// </summary>
+		private void ValidatePropertySettings()
+		{
+			if (AccountId.Length == 0) { throw new ArgumentException("AccountId property is null or empty."); }
+
+			if (!DomainOptions.ValidOptions.Contains(DomainOption)) { throw new ArgumentException("DomainOption property is invalid. Valid options include: SingleDomain, SingleDomainMultipleSubdomains or MultipleTopLevelDomains");}
+
+			if (DomainOption.Equals(DomainOptions.SingleDomainMultipleSubDomains))
+			{
+				if (DomainName.Length == 0) { throw new ArgumentException("A Domain value must be entered SingleDomain is set for DomainOption.");}
+			}
 		}
 	}
 }
