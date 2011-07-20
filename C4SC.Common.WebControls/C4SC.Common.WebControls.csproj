@@ -42,10 +42,19 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
     <Compile Include="Google\GoogleAnalytics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Google\GoogleAnalytics.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
