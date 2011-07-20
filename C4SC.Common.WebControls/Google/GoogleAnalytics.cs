@@ -155,13 +155,22 @@ namespace C4SC.Common.WebControls.Google
 		/// </summary>
 		private void ValidatePropertySettings()
 		{
-			if (AccountId.Length == 0) { throw new ArgumentException("AccountId property is null or empty."); }
+			if (AccountId.Length == 0)
+			{
+				throw new ArgumentException(Exceptions.GoogleAnalytics_AccountIdNullOrEmpty);
+			}
 
-			if (!DomainOptions.ValidOptions.Contains(DomainOption)) { throw new ArgumentException("DomainOption property is invalid. Valid options include: SingleDomain, SingleDomainMultipleSubdomains or MultipleTopLevelDomains");}
+			if (!DomainOptions.ValidOptions.Contains(DomainOption))
+			{
+				throw new ArgumentException(Exceptions.GoogleAnalytics_DomainOptionInvalid);
+			}
 
 			if (DomainOption.Equals(DomainOptions.SingleDomainMultipleSubDomains))
 			{
-				if (DomainName.Length == 0) { throw new ArgumentException("A Domain value must be entered SingleDomain is set for DomainOption.");}
+				if (DomainName.Length == 0)
+				{
+					throw new ArgumentException(Exceptions.GoogleAnalytics_DomainNameMissing);
+				}
 			}
 		}
 	}
