@@ -16,14 +16,14 @@ namespace Test.C4SC.Common
 		public void it_should_add_1_year_to_now()
 		{
 			DateTime actual		= 1.Year().FromNow();
-			DateTime exprected	= DateTime.Now.AddYears(1);
+			DateTime expected	= DateTime.Now.AddYears(1);
 
-			Assert.That(actual.Year, Is.EqualTo(exprected.Year));
-			Assert.That(actual.Month, Is.EqualTo(exprected.Month));
-			Assert.That(actual.Day, Is.EqualTo(exprected.Day));
-			Assert.That(actual.Minute, Is.EqualTo(exprected.Minute));
-			Assert.That(actual.Second, Is.AtLeast(exprected.Second));
-			Assert.That(actual.Millisecond, Is.AtLeast(exprected.Millisecond));
+			Assert.That(actual.Year, Is.EqualTo(expected.Year));
+			Assert.That(actual.Month, Is.EqualTo(expected.Month));
+			Assert.That(actual.Day, Is.EqualTo(expected.Day));
+			Assert.That(actual.Minute, Is.EqualTo(expected.Minute));
+			Assert.That(actual.Second, Is.AtLeast(expected.Second));
+			Assert.That(actual.Millisecond, Is.AtLeast(expected.Millisecond));
 		}
 
 		[Test]
@@ -67,14 +67,14 @@ namespace Test.C4SC.Common
 		public void it_should_subtract_1_year_from_now()
 		{
 			DateTime actual = 1.Year().Ago();
-			DateTime exprected = DateTime.Now.AddYears(-1);
+			DateTime expected = DateTime.Now.AddYears(-1);
 
-			Assert.That(actual.Year, Is.EqualTo(exprected.Year));
-			Assert.That(actual.Month, Is.EqualTo(exprected.Month));
-			Assert.That(actual.Day, Is.EqualTo(exprected.Day));
-			Assert.That(actual.Minute, Is.EqualTo(exprected.Minute));
-			Assert.That(actual.Second, Is.AtLeast(exprected.Second));
-			Assert.That(actual.Millisecond, Is.AtLeast(exprected.Millisecond));
+			Assert.That(actual.Year, Is.EqualTo(expected.Year));
+			Assert.That(actual.Month, Is.EqualTo(expected.Month));
+			Assert.That(actual.Day, Is.EqualTo(expected.Day));
+			Assert.That(actual.Minute, Is.EqualTo(expected.Minute));
+			Assert.That(actual.Second, Is.AtLeast(expected.Second));
+			Assert.That(actual.Millisecond, Is.AtLeast(expected.Millisecond));
 		}
 
 		[Test]
