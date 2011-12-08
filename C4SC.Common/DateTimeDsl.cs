@@ -204,7 +204,7 @@ namespace C4SC.Common
 		/// <returns>Past DateTime calculated from DateTime.Now().</returns>
 		public static DateTime Ago(this DateTimeComponents components)
 		{
-			return components.Ago(DateTime.Now);
+			return components.AgoFrom(DateTime.Now);
 		}
 
 		/// <summary>
@@ -213,7 +213,7 @@ namespace C4SC.Common
 		/// <param name="components"><see cref="DateTimeComponents"/> operand.</param>
 		/// <param name="dateTime">DateTime operand from which to calculate a past date.</param>
 		/// <returns>Past DateTime calculated from the given DateTimeComponents.</returns>
-		public static DateTime Ago(this DateTimeComponents components, DateTime dateTime)
+		public static DateTime AgoFrom(this DateTimeComponents components, DateTime dateTime)
 		{
 			return dateTime.AddYears(-components.Years)
 				.AddMonths(-components.Months)
