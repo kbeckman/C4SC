@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4SC.Common", "C4SC.Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.C4SC", "Test.C4SC\Test.C4SC.csproj", "{6E004BCE-654C-49EB-B3ED-51A6FB4EEBB3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{89076E1E-2398-4B6A-B820-64F3D1940916}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd Party Binaries", "3rd Party Binaries", "{89076E1E-2398-4B6A-B820-64F3D1940916}"
 	ProjectSection(SolutionItems) = preProject
-		Bin\nunit.framework.dll = Bin\nunit.framework.dll
+		3rd Party Binaries\nunit.framework.dll = 3rd Party Binaries\nunit.framework.dll
 	EndProjectSection
 EndProject
 Global
