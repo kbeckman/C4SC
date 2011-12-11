@@ -1,4 +1,5 @@
 ﻿using System;
+using C4SC.Common.Testable;
 
 namespace C4SC.Common
 {
@@ -37,7 +38,7 @@ namespace C4SC.Common
 		public Int32 Seconds { get { return _seconds; } }
 
 		private readonly Int32 _milliseconds;
-		public Int32 MilliSeconds { get { return _milliseconds; } }
+		public Int32 Milliseconds { get { return _milliseconds; } }
 	}
 
 	/// <summary>
@@ -150,9 +151,9 @@ namespace C4SC.Common
 		/// </summary>
 		/// <param name="millisecond">Number of milliseconds.</param>
 		/// <returns><see cref="DateTimeComponents"/> composed of the given millisecond parameter.</returns>
-		public static DateTimeComponents MilliSecond(this Int32 millisecond)
+		public static DateTimeComponents Millisecond(this Int32 millisecond)
 		{
-			return millisecond.MilliSeconds();
+			return millisecond.Milliseconds();
 		}
 
 		/// <summary>
@@ -160,7 +161,7 @@ namespace C4SC.Common
 		/// </summary>
 		/// <param name="milliseconds">Number of milliseconds.</param>
 		/// <returns><see cref="DateTimeComponents"/> composed of the given milliseconds parameter.</returns>
-		public static DateTimeComponents MilliSeconds(this Int32 milliseconds)
+		public static DateTimeComponents Milliseconds(this Int32 milliseconds)
 		{
 			return new DateTimeComponents(0, 0, 0, 0, 0, milliseconds);
 		}
@@ -171,6 +172,17 @@ namespace C4SC.Common
 	/// </summary>
 	public static class DateTimeComponentsConversionToDateTime
 	{
+		private static IDateTimeNowProvider _svc = new SystemDateTimeNowProvider();
+		private static readonly object _syncLock = new object();
+
+		internal static void SetDateTimeNowProvider(IDateTimeNowProvider provider)
+		{
+			lock (_syncLock)
+			{
+				_svc = provider;
+			}
+		}
+
 		/// <summary>
 		/// Calculates the result of DateTimeComponents added to DateTime.Now().
 		/// </summary>
@@ -178,7 +190,7 @@ namespace C4SC.Common
 		/// <returns>Future DateTime calculated from DateTime.Now().</returns>
 		public static DateTime FromNow(this DateTimeComponents components)
 		{
-			return components.From(DateTime.Now);
+			return components.From(_svc.DateTimeNow());
 		}
 
 		/// <summary>
@@ -194,7 +206,7 @@ namespace C4SC.Common
 				.AddDays(components.Days)
 				.AddMinutes(components.Minutes)
 				.AddSeconds(components.Seconds)
-				.AddMilliseconds(components.MilliSeconds);
+				.AddMilliseconds(components.Milliseconds);
 		}
 
 		/// <summary>
@@ -204,7 +216,7 @@ namespace C4SC.Common
 		/// <returns>Past DateTime calculated from DateTime.Now().</returns>
 		public static DateTime Ago(this DateTimeComponents components)
 		{
-			return components.AgoFrom(DateTime.Now);
+			return components.AgoFrom(_svc.DateTimeNow());
 		}
 
 		/// <summary>
@@ -220,7 +232,7 @@ namespace C4SC.Common
 				.AddDays(-components.Days)
 				.AddMinutes(-components.Minutes)
 				.AddSeconds(-components.Seconds)
-				.AddMilliseconds(-components.MilliSeconds);
+				.AddMilliseconds(-components.Milliseconds);
 		}
 	}
 }

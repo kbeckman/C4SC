@@ -1,131 +1,166 @@
 ﻿using System;
 using C4SC.Common;
+using C4SC.Common.Testable;
 using NUnit.Framework;
 
 namespace Test.C4SC.Common
 {
 	/// <summary>
-	/// NUnit TestFixture providing unit test coverage of the C4SC DateTime DSL.
+	/// NUnit TestFixture providing unit test coverage of the singular C4SC DateTime DSL methods (Year, Month, etc.)
 	/// </summary>
 	[TestFixture]
-	public class DateTimeDsl
+	public class DateTimeDsl_Singular_DateTimeNow
 	{
-		#region Singular Addition Methods - Without Chaining
+		#region Setup / TearDown
+
+		private IDateTimeNowProvider _nowProvider;
+
+		/// <summary>
+		/// Executes individual Test-level setup and initialization prior to each test being run.
+		/// </summary>
+		[SetUp]
+		public void SetUpTest()
+		{
+			_nowProvider = new TestDateTimeNowProvider(DateTime.Now);
+			DateTimeComponentsConversionToDateTime.SetDateTimeNowProvider(_nowProvider);
+		}
+
+
+		/// <summary>
+		/// Executes individual Test-level clean-up after each test has been run. This method is guaranteed to run 
+		/// even if an exception is thrown.
+		/// </summary>
+		[TearDown]
+		public void TearDownTest()
+		{
+			DateTimeComponentsConversionToDateTime.SetDateTimeNowProvider(new SystemDateTimeNowProvider());
+		}
+
+		#endregion
+			
+		#region Addition Methods - Without Chaining
 
 		[Test]
 		public void it_should_add_1_year_to_now()
 		{
 			DateTime actual		= 1.Year().FromNow();
-			DateTime expected	= DateTime.Now.AddYears(1);
+			DateTime expected	= _nowProvider.DateTimeNow().AddYears(1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_add_1_month_to_now()
 		{
 			DateTime actual		= 1.Month().FromNow();
-			DateTime expected	= DateTime.Now.AddMonths(1);
+			DateTime expected	= _nowProvider.DateTimeNow().AddMonths(1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_add_1_day_to_now()
 		{
 			DateTime actual		= 1.Day().FromNow();
-			DateTime expected	= DateTime.Now.AddDays(1);
+			DateTime expected	= _nowProvider.DateTimeNow().AddDays(1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_add_1_minute_to_now()
 		{
 			DateTime actual		= 1.Minute().FromNow();
-			DateTime expected	= DateTime.Now.AddMinutes(1);
+			DateTime expected	= _nowProvider.DateTimeNow().AddMinutes(1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_add_1_second_to_now()
 		{
 			DateTime actual		= 1.Second().FromNow();
-			DateTime expected	= DateTime.Now.AddSeconds(1);
+			DateTime expected	= _nowProvider.DateTimeNow().AddSeconds(1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_add_1_millisecond_to_now()
 		{
-			DateTime actual = 1.MilliSecond().FromNow();
-			Assert.Fail();
-			Assert.That(actual.Millisecond, Is.AtLeast(DateTime.Now.AddMilliseconds(1).Millisecond));
-			Assert.That(actual.Millisecond, Is.AtMost(DateTime.Now.AddMilliseconds(2).Millisecond));
+			DateTime actual		= 1.Millisecond().FromNow();
+			DateTime expected	= _nowProvider.DateTimeNow().AddMilliseconds(1);
+
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		#endregion
 
-		#region Singular Subtraction Methods - Without Chaining
+		#region Subtraction Methods - Without Chaining
 
 		[Test]
 		public void it_should_subtract_1_year_from_now()
 		{
 			DateTime actual		= 1.Year().Ago();
-			DateTime expected	= DateTime.Now.AddYears(-1);
+			DateTime expected	= _nowProvider.DateTimeNow().AddYears(-1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_subtract_1_month_from_now()
 		{
 			DateTime actual		= 1.Month().Ago();
-			DateTime expected	= DateTime.Now.AddMonths(-1);
-			
-			InvokeAllDateTimeAssertions(actual, expected);
+			DateTime expected	= _nowProvider.DateTimeNow().AddMonths(-1);
+
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_subtract_1_minute_from_now()
 		{
 			DateTime actual		= 1.Minute().Ago();
-			DateTime expected	= DateTime.Now.AddMinutes(-1);
-			
-			InvokeAllDateTimeAssertions(actual, expected);
+			DateTime expected	= _nowProvider.DateTimeNow().AddMinutes(-1);
+
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_subtract_1_day_from_now()
 		{
-			DateTime actual = 1.Day().Ago();
-			DateTime expected = DateTime.Now.AddDays(-1);
+			DateTime actual		= 1.Day().Ago();
+			DateTime expected	= _nowProvider.DateTimeNow().AddDays(-1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_subtract_1_second_from_now()
 		{
 			DateTime actual		= 1.Second().Ago();
-			DateTime expected	= DateTime.Now.AddSeconds(-1);
+			DateTime expected	= _nowProvider.DateTimeNow().AddSeconds(-1);
 
-			InvokeAllDateTimeAssertions(actual, expected);
+			Assert.That(actual, Is.EqualTo(expected));
 		}
 
 		[Test]
 		public void it_should_subtract_1_millisecond_from_now()
 		{
-			DateTime actual = 1.MilliSecond().Ago();
-			Assert.Fail();
-			Assert.That(actual.Millisecond, Is.AtMost(DateTime.Now.AddMilliseconds(-1).Millisecond));
-			Assert.That(actual.Millisecond, Is.AtLeast(DateTime.Now.AddMilliseconds(-2).Millisecond));
-		}
-		
-		#endregion
+			DateTime actual		= 1.Millisecond().Ago();
+			DateTime expected	= _nowProvider.DateTimeNow().AddMilliseconds(-1);
 
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		#endregion
+	}
+
+	/// <summary>
+	/// NUnit TestFixture providing unit test coverage of the C4SC DateTime DSL.
+	/// </summary>
+	[TestFixture]
+	public class DateTimeDsl_Plural_GivenDate
+	{
 		#region Plural Addition Methods - Without Chaining
 
 		[Test]
@@ -138,7 +173,7 @@ namespace Test.C4SC.Common
 			DateTime nineEleven = new DateTime(2011, 9, 11);
 			DateTime actual		= arg.Years().From(nineEleven);
 
-			InvokeAllDateTimeAssertions(actual, nineEleven.AddYears(arg));
+			Assert.That(actual, Is.EqualTo(nineEleven.AddYears(arg)));
 		}
 
 		[Test]
@@ -151,7 +186,7 @@ namespace Test.C4SC.Common
 			DateTime kentuckyDerby	= new DateTime(2011, 5, 7);
 			DateTime actual			= arg.Months().From(kentuckyDerby);
 
-			InvokeAllDateTimeAssertions(actual, kentuckyDerby.AddMonths(arg));
+			Assert.That(actual, Is.EqualTo(kentuckyDerby.AddMonths(arg)));
 		}
 
 		[Test]
@@ -164,7 +199,7 @@ namespace Test.C4SC.Common
 			DateTime lastMonday = new DateTime(2011, 11, 14);
 			DateTime actual		= arg.Days().From(lastMonday);
 
-			InvokeAllDateTimeAssertions(actual, lastMonday.AddDays(arg));
+			Assert.That(actual, Is.EqualTo(lastMonday.AddDays(arg)));
 		}
 
 		[Test]
@@ -177,7 +212,7 @@ namespace Test.C4SC.Common
 			DateTime kickoff	= new DateTime(2011, 11, 20, 15, 0, 0);
 			DateTime actual		= arg.Minutes().From(kickoff);
 
-			InvokeAllDateTimeAssertions(actual, kickoff.AddMinutes(arg));
+			Assert.That(actual, Is.EqualTo(kickoff.AddMinutes(arg)));
 		}
 
 		[Test]
@@ -190,7 +225,7 @@ namespace Test.C4SC.Common
 			DateTime mileRelayStart = new DateTime(2000, 4, 10, 15, 0, 0);
 			DateTime actual			= arg.Seconds().From(mileRelayStart);
 
-			InvokeAllDateTimeAssertions(actual, mileRelayStart.AddSeconds(arg));
+			Assert.That(actual, Is.EqualTo(mileRelayStart.AddSeconds(arg)));
 		}
 
 		[Test]
@@ -203,7 +238,7 @@ namespace Test.C4SC.Common
 			DateTime executionTime	= new DateTime(2011, 06, 30, 0, 0, 0);
 			DateTime actual			= arg.Seconds().From(executionTime);
 
-			InvokeAllDateTimeAssertions(actual, executionTime.AddSeconds(arg));
+			Assert.That(actual, Is.EqualTo(executionTime.AddSeconds(arg)));
 		}
 
 		#endregion
@@ -220,7 +255,7 @@ namespace Test.C4SC.Common
 			DateTime nineEleven = new DateTime(2011, 9, 11);
 			DateTime actual		= arg.Years().AgoFrom(nineEleven);
 
-			InvokeAllDateTimeAssertions(actual, nineEleven.AddYears(-arg));
+			Assert.That(actual, Is.EqualTo(nineEleven.AddYears(-arg)));
 		}
 
 		[Test]
@@ -233,7 +268,7 @@ namespace Test.C4SC.Common
 			DateTime kentuckyDerby	= new DateTime(2011, 5, 7);
 			DateTime actual			= arg.Months().AgoFrom(kentuckyDerby);
 
-			InvokeAllDateTimeAssertions(actual, kentuckyDerby.AddMonths(-arg));
+			Assert.That(actual, Is.EqualTo(kentuckyDerby.AddMonths(-arg)));
 		}
 
 		[Test]
@@ -246,7 +281,7 @@ namespace Test.C4SC.Common
 			DateTime lastMonday = new DateTime(2011, 11, 14);
 			DateTime actual		= arg.Days().AgoFrom(lastMonday);
 
-			InvokeAllDateTimeAssertions(actual, lastMonday.AddDays(-arg));
+			Assert.That(actual, Is.EqualTo(lastMonday.AddDays(-arg)));
 		}
 
 		[Test]
@@ -259,7 +294,7 @@ namespace Test.C4SC.Common
 			DateTime kickoff	= new DateTime(2011, 11, 20, 15, 0, 0);
 			DateTime actual		= arg.Minutes().AgoFrom(kickoff);
 
-			InvokeAllDateTimeAssertions(actual, kickoff.AddMinutes(-arg));
+			Assert.That(actual, Is.EqualTo(kickoff.AddMinutes(-arg)));
 		}
 
 		[Test]
@@ -272,7 +307,7 @@ namespace Test.C4SC.Common
 			DateTime mileRelayStart = new DateTime(2000, 4, 10, 15, 0, 0);
 			DateTime actual			= arg.Seconds().AgoFrom(mileRelayStart);
 
-			InvokeAllDateTimeAssertions(actual, mileRelayStart.AddSeconds(-arg));
+			Assert.That(actual, Is.EqualTo(mileRelayStart.AddSeconds(-arg)));
 		}
 
 		[Test]
@@ -283,26 +318,11 @@ namespace Test.C4SC.Common
 		public void it_should_stubract_milliseconds_from_a_timestamp(Int32 arg)
 		{
 			DateTime executionTime	= new DateTime(2011, 06, 30, 0, 0, 0);
-			DateTime actual			= arg.Seconds().From(executionTime);
+			DateTime actual			= arg.Milliseconds().AgoFrom(executionTime);
 
-			InvokeAllDateTimeAssertions(actual, executionTime.AddSeconds(arg));
+			Assert.That(actual, Is.EqualTo(executionTime.AddMilliseconds(-arg)));
 		}
 
 		#endregion
-		
-		/// <summary>
-		/// Invokes all Assertion methods required to properly compare actual and expected DateTime values.
-		/// </summary>
-		/// <param name="actual">Actual (DSL calculated) DateTime value.</param>
-		/// <param name="expected">Expected DateTime value.</param>
-		private static void InvokeAllDateTimeAssertions(DateTime actual, DateTime expected)
-		{
-			Assert.That(actual.Year, Is.EqualTo(expected.Year));
-			Assert.That(actual.Month, Is.EqualTo(expected.Month));
-			Assert.That(actual.Day, Is.EqualTo(expected.Day));
-			Assert.That(actual.Minute, Is.EqualTo(expected.Minute));
-			//Assert.That(actual.Second, Is.AtLeast(expected.Second));
-			//Assert.That(actual.Millisecond, Is.AtLeast(expected.Millisecond));	
-		}
 	}
 }
