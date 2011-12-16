@@ -1,5 +1,5 @@
 ﻿using System;
-using C4SC.Common.Testable;
+using C4SC.Common.Testability;
 
 namespace C4SC.Common
 {
@@ -172,15 +172,17 @@ namespace C4SC.Common
 	/// </summary>
 	public static class DateTimeComponentsConversionToDateTime
 	{
-		private static IDateTimeNowProvider _svc = new SystemDateTimeNowProvider();
-		private static readonly object _syncLock = new object();
-
-		internal static void SetDateTimeNowProvider(IDateTimeNowProvider provider)
+		private static IDateTimeNowAdapter _nowAdapter	= new SystemDateTimeNowAdapter();
+		private static readonly object _syncLock		= new object();
+		
+		/// <summary>
+		/// Sets the DSL's IDateTimeNowAdapter. This is the injection point for tests to provide their own adapter
+		/// implementation.
+		/// </summary>
+		/// <param name="adapter"><see cref="IDateTimeNowAdapter"/> implementation.</param>
+		internal static void SetDateTimeNowAdapter(IDateTimeNowAdapter adapter)
 		{
-			lock (_syncLock)
-			{
-				_svc = provider;
-			}
+			lock (_syncLock) { _nowAdapter = adapter; }
 		}
 
 		/// <summary>
@@ -190,7 +192,7 @@ namespace C4SC.Common
 		/// <returns>Future DateTime calculated from DateTime.Now().</returns>
 		public static DateTime FromNow(this DateTimeComponents components)
 		{
-			return components.From(_svc.DateTimeNow());
+			return components.From(_nowAdapter.DateTimeNow());
 		}
 
 		/// <summary>
@@ -216,7 +218,7 @@ namespace C4SC.Common
 		/// <returns>Past DateTime calculated from DateTime.Now().</returns>
 		public static DateTime Ago(this DateTimeComponents components)
 		{
-			return components.AgoFrom(_svc.DateTimeNow());
+			return components.AgoFrom(_nowAdapter.DateTimeNow());
 		}
 
 		/// <summary>

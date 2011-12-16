@@ -1,6 +1,6 @@
 ﻿using System;
 using C4SC.Common;
-using C4SC.Common.Testable;
+using C4SC.Common.Testability;
 using NUnit.Framework;
 
 namespace Test.C4SC.Common
@@ -13,7 +13,7 @@ namespace Test.C4SC.Common
 	{
 		#region Setup / TearDown
 
-		private IDateTimeNowProvider _nowProvider;
+		private IDateTimeNowAdapter _nowAdapter;
 
 		/// <summary>
 		/// Executes individual Test-level setup and initialization prior to each test being run.
@@ -21,10 +21,9 @@ namespace Test.C4SC.Common
 		[SetUp]
 		public void SetUpTest()
 		{
-			_nowProvider = new TestDateTimeNowProvider(DateTime.Now);
-			DateTimeComponentsConversionToDateTime.SetDateTimeNowProvider(_nowProvider);
+			_nowAdapter = new TestDateTimeNowAdapter(DateTime.Now);
+			DateTimeComponentsConversionToDateTime.SetDateTimeNowAdapter(_nowAdapter);
 		}
-
 
 		/// <summary>
 		/// Executes individual Test-level clean-up after each test has been run. This method is guaranteed to run 
@@ -33,7 +32,7 @@ namespace Test.C4SC.Common
 		[TearDown]
 		public void TearDownTest()
 		{
-			DateTimeComponentsConversionToDateTime.SetDateTimeNowProvider(new SystemDateTimeNowProvider());
+			DateTimeComponentsConversionToDateTime.SetDateTimeNowAdapter(new SystemDateTimeNowAdapter());
 		}
 
 		#endregion
@@ -44,7 +43,7 @@ namespace Test.C4SC.Common
 		public void it_should_add_1_year_to_now()
 		{
 			DateTime actual		= 1.Year().FromNow();
-			DateTime expected	= _nowProvider.DateTimeNow().AddYears(1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddYears(1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -53,7 +52,7 @@ namespace Test.C4SC.Common
 		public void it_should_add_1_month_to_now()
 		{
 			DateTime actual		= 1.Month().FromNow();
-			DateTime expected	= _nowProvider.DateTimeNow().AddMonths(1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddMonths(1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -62,7 +61,7 @@ namespace Test.C4SC.Common
 		public void it_should_add_1_day_to_now()
 		{
 			DateTime actual		= 1.Day().FromNow();
-			DateTime expected	= _nowProvider.DateTimeNow().AddDays(1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddDays(1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -71,7 +70,7 @@ namespace Test.C4SC.Common
 		public void it_should_add_1_minute_to_now()
 		{
 			DateTime actual		= 1.Minute().FromNow();
-			DateTime expected	= _nowProvider.DateTimeNow().AddMinutes(1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddMinutes(1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -80,7 +79,7 @@ namespace Test.C4SC.Common
 		public void it_should_add_1_second_to_now()
 		{
 			DateTime actual		= 1.Second().FromNow();
-			DateTime expected	= _nowProvider.DateTimeNow().AddSeconds(1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddSeconds(1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -89,7 +88,7 @@ namespace Test.C4SC.Common
 		public void it_should_add_1_millisecond_to_now()
 		{
 			DateTime actual		= 1.Millisecond().FromNow();
-			DateTime expected	= _nowProvider.DateTimeNow().AddMilliseconds(1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddMilliseconds(1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -102,7 +101,7 @@ namespace Test.C4SC.Common
 		public void it_should_subtract_1_year_from_now()
 		{
 			DateTime actual		= 1.Year().Ago();
-			DateTime expected	= _nowProvider.DateTimeNow().AddYears(-1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddYears(-1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -111,7 +110,7 @@ namespace Test.C4SC.Common
 		public void it_should_subtract_1_month_from_now()
 		{
 			DateTime actual		= 1.Month().Ago();
-			DateTime expected	= _nowProvider.DateTimeNow().AddMonths(-1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddMonths(-1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -120,7 +119,7 @@ namespace Test.C4SC.Common
 		public void it_should_subtract_1_minute_from_now()
 		{
 			DateTime actual		= 1.Minute().Ago();
-			DateTime expected	= _nowProvider.DateTimeNow().AddMinutes(-1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddMinutes(-1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -129,7 +128,7 @@ namespace Test.C4SC.Common
 		public void it_should_subtract_1_day_from_now()
 		{
 			DateTime actual		= 1.Day().Ago();
-			DateTime expected	= _nowProvider.DateTimeNow().AddDays(-1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddDays(-1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -138,7 +137,7 @@ namespace Test.C4SC.Common
 		public void it_should_subtract_1_second_from_now()
 		{
 			DateTime actual		= 1.Second().Ago();
-			DateTime expected	= _nowProvider.DateTimeNow().AddSeconds(-1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddSeconds(-1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -147,7 +146,7 @@ namespace Test.C4SC.Common
 		public void it_should_subtract_1_millisecond_from_now()
 		{
 			DateTime actual		= 1.Millisecond().Ago();
-			DateTime expected	= _nowProvider.DateTimeNow().AddMilliseconds(-1);
+			DateTime expected	= _nowAdapter.DateTimeNow().AddMilliseconds(-1);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
