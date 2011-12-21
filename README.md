@@ -12,10 +12,9 @@ request to fix whatever issue(s) you might encounter.
 C4SC.Common is a common library with functionality valuable to all types of .NET projects independent of development 
 platform. Types and classes in this library can be considered extensions, supplements or enhancements to functionality 
 found in the .NET Framework base libraries.
-  return
+    return
 
-####DateTime DSL -- [C4SC post]
-(http://www.coding4streetcred.com/blog/post/A-C4SC-Series-DSL-Development-in-NET-with-C.aspx)
+####DateTime DSL -- [C4SC post](http://www.coding4streetcred.com/blog/post/A-C4SC-Series-DSL-Development-in-NET-with-C.aspx)
 Provides a more English-like syntax for working with DateTime...
 
 	DateTime endOfSprint 		= 2.Weeks().FromNow();
@@ -26,10 +25,9 @@ Provides a more English-like syntax for working with DateTime...
 ---
 ##C4SC.Common.WebControls##
 C4SC.Common.WebControls contains web controls useful in ASP.NET web forms projects.
-  return
+    return
 
-####GoogleAnalytics -- [C4SC post]
-(http://www.coding4streetcred.com/blog/post/Add-Google-Analytics-to-your-ASPNET-WebForms-Application.aspx)
+####GoogleAnalytics -- [C4SC post](http://www.coding4streetcred.com/blog/post/Add-Google-Analytics-to-your-ASPNET-WebForms-Application.aspx)
 A configurable WebControl for adding Google Analytics tracking to your site...
 
 	<c4sc:GoogleAnalytics ID="analytics" runat="server" AccountId="yourAccountId" DomainOption="SingleDomain" />
