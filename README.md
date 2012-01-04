@@ -22,7 +22,7 @@ Provides a more English-like syntax for working with DateTime...
 	DateTime lunchTime			= 3.Hours().And(20.Minutes()).FromNow();
 	DateTime lastWeekAtThisTime = 7.Days().Ago();
 	DateTime kickoff 			= 1.Hour().AgoFrom(theEndOfTheGame);
-	DateTime openingBell		= 6.Hours().And(30.Minutes()).From(theClosingBell);
+	DateTime theOpeningBell		= 6.Hours().And(30.Minutes()).AgoFrom(theClosingBell);
 
 ---
 ##C4SC.Common.WebControls##
