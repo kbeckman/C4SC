@@ -237,4 +237,21 @@ namespace C4SC.Common
 				.AddMilliseconds(-components.Milliseconds);
 		}
 	}
+
+	/// <summary>
+	/// Extension methods to support method-chaining on DateTimeComponents. This allows the DSL consumer to modify all 
+	/// components of date and time before the actual conversion to DateTime.
+	/// </summary>
+	public static class DateTimeComponentsChaining
+	{
+		public static DateTimeComponents And(this DateTimeComponents components, DateTimeComponents operand)
+		{
+			return new DateTimeComponents(components.Years + operand.Years
+										, components.Months + operand.Months
+										, components.Days + operand.Days
+										, components.Minutes + operand.Minutes
+										, components.Seconds + operand.Seconds
+										, components.Milliseconds + operand.Milliseconds);
+		}
+	}
 }
