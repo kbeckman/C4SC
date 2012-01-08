@@ -239,8 +239,8 @@ namespace C4SC.Common
 	}
 
 	/// <summary>
-	/// Extension methods to support method-chaining on DateTimeComponents. This allows the DSL consumer to modify all 
-	/// components of date and time before the actual conversion to DateTime.
+	/// Extension methods to support method-chaining on DateTimeComponents allowing for modification of all components
+	/// of date and time before the actual conversion to <see cref="DateTime"/>.
 	/// </summary>
 	public static class DateTimeComponentsChaining
 	{
