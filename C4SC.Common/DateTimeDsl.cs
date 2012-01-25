@@ -87,6 +87,26 @@ namespace C4SC.Common
 		}
 
 		/// <summary>
+		/// Converts an Int32 to its equivalent DateTimeComponents representation in weeks. 
+		/// </summary>
+		/// <param name="weeks">Number of weeks.</param>
+		/// <returns><see cref="DateTimeComponents"/> composed of the given week parameter.</returns>
+		public static DateTimeComponents Week(this Int32 weeks)
+		{
+			return weeks.Weeks();
+		}
+
+		/// <summary>
+		/// Converts an Int32 to its equivalent DateTimeComponents representation in weeks. 
+		/// </summary>
+		/// <param name="weeks">Number of weeks.</param>
+		/// <returns><see cref="DateTimeComponents"/> composed of the given weeks parameter.</returns>
+		public static DateTimeComponents Weeks(this Int32 weeks)
+		{
+			return new DateTimeComponents(0, 0, weeks * 7, 0, 0, 0);
+		}
+
+		/// <summary>
 		/// Converts an Int32 to its equivalent DateTimeComponents representation in days. 
 		/// </summary>
 		/// <param name="day">Number of days.</param>
@@ -252,6 +272,62 @@ namespace C4SC.Common
 										, components.Minutes + operand.Minutes
 										, components.Seconds + operand.Seconds
 										, components.Milliseconds + operand.Milliseconds);
+		}
+	}
+
+	/// <summary>
+	/// DateTime DSL implementation for Yesterday's date.
+	/// </summary>
+	public static class Yesterday
+	{
+		private static IDateTimeNowAdapter _nowAdapter	= new SystemDateTimeNowAdapter();
+		private static readonly object _syncLock		= new object();
+
+		/// <summary>
+		/// Sets the DSL's IDateTimeNowAdapter. This is the injection point for tests to provide their own adapter
+		/// implementation.
+		/// </summary>
+		/// <param name="adapter"><see cref="IDateTimeNowAdapter"/> implementation.</param>
+		internal static void SetDateTimeNowAdapter(IDateTimeNowAdapter adapter)
+		{
+			lock (_syncLock) { _nowAdapter = adapter; }
+		}
+
+		/// <summary>
+		/// Yesterday's Date.
+		/// </summary>
+		/// <returns>Yesterday's date value 24 hours ago.</returns>
+		public static DateTime Date()
+		{
+			return _nowAdapter.DateTimeNow().Date.AddDays(-1);
+		}
+	}
+
+	/// <summary>
+	/// DateTime DSL implementation for Tomorrow's date.
+	/// </summary>
+	public static class Tomorrow
+	{
+		private static IDateTimeNowAdapter _nowAdapter	= new SystemDateTimeNowAdapter();
+		private static readonly object _syncLock		= new object();
+
+		/// <summary>
+		/// Sets the DSL's IDateTimeNowAdapter. This is the injection point for tests to provide their own adapter
+		/// implementation.
+		/// </summary>
+		/// <param name="adapter"><see cref="IDateTimeNowAdapter"/> implementation.</param>
+		internal static void SetDateTimeNowAdapter(IDateTimeNowAdapter adapter)
+		{
+			lock (_syncLock) { _nowAdapter = adapter; }
+		}
+
+		/// <summary>
+		/// Tomorrow's Date.
+		/// </summary>
+		/// <returns>Tomorrow's date value 24 hours from now.</returns>
+		public static DateTime Date()
+		{
+			return _nowAdapter.DateTimeNow().Date.AddDays(1);
 		}
 	}
 }

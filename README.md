@@ -15,14 +15,24 @@ found in the .NET Framework base libraries.
 <br/><br/>
 
 ###DateTime DSL -- [C4SC post](http://www.coding4streetcred.com/blog/post/A-C4SC-Series-DSL-Development-in-NET-with-C.aspx)
-Provides a more English-like syntax for working with DateTime...
+Provides a more English-like syntax for working with DateTime... This DSL was inspired by the helper methods present in
+[Rails](http://api.rubyonrails.org/classes/Date.html), the open source Ruby MVC web development framework.
 
 	DateTime endOfSprint 		= 2.Weeks().FromNow();
 	DateTime fullyVestedDate 	= 5.Years().From(hireDate);
 	DateTime lunchTime			= 3.Hours().And(20.Minutes()).FromNow();
+	DateTime nineDaysLater		= 1.Week().And(2.Days()).FromNow();
 	DateTime lastWeekAtThisTime = 7.Days().Ago();
 	DateTime kickoff 			= 1.Hour().AgoFrom(theEndOfTheGame);
 	DateTime theOpeningBell		= 6.Hours().And(30.Minutes()).AgoFrom(theClosingBell);
+
+	DateTime yesterdayMidnight	= Yesterday.Date().AtBeginningOfDay();
+	DateTime tomorrowAtThisTime = Tomorrow.Date();
+	DateTime billsDue			= aDate.AtEndOfMonth();
+	DateTime taxesDue			= aDate.AtEndOfQuarter();
+	Boolean isToday				= unknownDate.IsToday();
+	Boolean isPast				= unknownDate.IsPast();
+	Boolean isFuture			= unknownDate.IsFuture();
 
 ---
 ##C4SC.Common.WebControls##

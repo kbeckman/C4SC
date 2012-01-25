@@ -67,6 +67,15 @@ namespace Test.C4SC.Common
 		}
 
 		[Test]
+		public void it_should_add_1_week_to_now()
+		{
+			DateTime actual		= 1.Week().FromNow();
+			DateTime expected	= _nowAdapter.DateTimeNow().AddDays(7);
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
 		public void it_should_add_1_minute_to_now()
 		{
 			DateTime actual		= 1.Minute().FromNow();
@@ -119,6 +128,19 @@ namespace Test.C4SC.Common
 		{
 			DateTime actual		= arg.Months().FromNow();
 			DateTime expected	= _nowAdapter.DateTimeNow().AddMonths(arg);
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
+		[TestCase(6)]
+		[TestCase(12)]
+		[TestCase(24)]
+		[TestCase(48)]
+		public void it_should_add_weeks_to_now(Int32 arg)
+		{
+			DateTime actual		= arg.Weeks().FromNow();
+			DateTime expected	= _nowAdapter.DateTimeNow().AddDays(arg * 7);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -185,13 +207,14 @@ namespace Test.C4SC.Common
 			DateTime actual	= 1.Year()
 							.And(1.Month())
 							.And(1.Day())
+							.And(1.Week())
 							.And(1.Minute())
 							.And(1.Second())
 							.And(1.Millisecond()).FromNow();
 
 			DateTime expected = _nowAdapter.DateTimeNow().AddYears(1)
 									.AddMonths(1)
-									.AddDays(1)
+									.AddDays(8)
 									.AddMinutes(1)
 									.AddSeconds(1)
 									.AddMilliseconds(1);
@@ -204,22 +227,23 @@ namespace Test.C4SC.Common
 		#region Plural Addition Methods - Chaining
 
 		[Test]
-		[TestCase(1, 2, 3, 4, 5, 6)]
-		[TestCase(2, 4, 6, 8, 10, 12)]
-		[TestCase(5, 10, 15, 20, 25, 30)]
-		[TestCase(100, 200, 300, 400, 500, 600)]
-		public void it_should_add_all_components_to_now(Int32 years, Int32 months, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
+		[TestCase(1, 2, 2, 3, 4, 5, 6)]
+		[TestCase(2, 4, 3, 6, 8, 10, 12)]
+		[TestCase(5, 10, 4, 15, 20, 25, 30)]
+		[TestCase(100, 200, 5, 300, 400, 500, 600)]
+		public void it_should_add_all_components_to_now(Int32 years, Int32 months, Int32 weeks, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
 		{
 			DateTime actual	= years.Years()
 								.And(months.Months())
 								.And(days.Days())
+								.And(weeks.Weeks())
 								.And(minutes.Minutes())
 								.And(seconds.Seconds())
 								.And(milliseconds.Milliseconds()).FromNow();
 
 			DateTime expected = _nowAdapter.DateTimeNow().AddYears(years)
 									.AddMonths(months)
-									.AddDays(days)
+									.AddDays(days + (weeks * 7))
 									.AddMinutes(minutes)
 									.AddSeconds(seconds)
 									.AddMilliseconds(milliseconds);
@@ -245,6 +269,15 @@ namespace Test.C4SC.Common
 		{
 			DateTime actual		= 1.Month().Ago();
 			DateTime expected	= _nowAdapter.DateTimeNow().AddMonths(-1);
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
+		public void it_should_subtract_1_week_from_now()
+		{
+			DateTime actual		= 1.Week().Ago();
+			DateTime expected	= _nowAdapter.DateTimeNow().AddDays(-7);
 
 			Assert.That(actual, Is.EqualTo(expected));
 		}
@@ -316,6 +349,19 @@ namespace Test.C4SC.Common
 		}
 
 		[Test]
+		[TestCase(2)]
+		[TestCase(3)]
+		[TestCase(10)]
+		[TestCase(12)]
+		public void it_should_subtract_weeks_from_now(Int32 arg)
+		{
+			DateTime actual		= arg.Weeks().Ago();
+			DateTime expected	= _nowAdapter.DateTimeNow().AddDays(-(arg * 7));
+
+			Assert.That(actual, Is.EqualTo(expected));
+		}
+
+		[Test]
 		[TestCase(1)]
 		[TestCase(5)]
 		[TestCase(7)]
@@ -376,6 +422,7 @@ namespace Test.C4SC.Common
 		{
 			DateTime actual = 1.Year()
 							.And(1.Month())
+							.And(1.Week())
 							.And(1.Day())
 							.And(1.Minute())
 							.And(1.Second())
@@ -383,7 +430,7 @@ namespace Test.C4SC.Common
 
 			DateTime expected = _nowAdapter.DateTimeNow().AddYears(-1)
 									.AddMonths(-1)
-									.AddDays(-1)
+									.AddDays(-8)
 									.AddMinutes(-1)
 									.AddSeconds(-1)
 									.AddMilliseconds(-1);
@@ -396,14 +443,15 @@ namespace Test.C4SC.Common
 		#region Plural Subtraction Methods - Chaining
 
 		[Test]
-		[TestCase(1, 2, 3, 4, 5, 6)]
-		[TestCase(2, 4, 6, 8, 10, 12)]
-		[TestCase(5, 10, 15, 20, 25, 30)]
-		[TestCase(100, 200, 300, 400, 500, 600)]
-		public void it_should_subtract_all_components_from_now(Int32 years, Int32 months, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
+		[TestCase(1, 2, 2, 3, 4, 5, 6)]
+		[TestCase(2, 4, 3, 6, 8, 10, 12)]
+		[TestCase(5, 10, 4, 15, 20, 25, 30)]
+		[TestCase(100, 200, 5, 300, 400, 500, 600)]
+		public void it_should_subtract_all_components_from_now(Int32 years, Int32 months, Int32 weeks, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
 		{
 			DateTime actual = years.Years()
 								.And(months.Months())
+								.And(weeks.Weeks())
 								.And(days.Days())
 								.And(minutes.Minutes())
 								.And(seconds.Seconds())
@@ -411,7 +459,7 @@ namespace Test.C4SC.Common
 
 			DateTime expected = _nowAdapter.DateTimeNow().AddYears(-years)
 									.AddMonths(-months)
-									.AddDays(-days)
+									.AddDays(-days + -(weeks * 7))
 									.AddMinutes(-minutes)
 									.AddSeconds(-seconds)
 									.AddMilliseconds(-milliseconds);
@@ -446,6 +494,15 @@ namespace Test.C4SC.Common
 			DateTime actual			= 1.Month().From(kentuckyDerby);
 
 			Assert.That(actual, Is.EqualTo(kentuckyDerby.AddMonths(1)));
+		}
+
+		[Test]
+		public void it_should_add_1_week_to_a_date()
+		{
+			DateTime lastMonday = new DateTime(2011, 11, 14);
+			DateTime actual		= 1.Week().From(lastMonday);
+
+			Assert.That(actual, Is.EqualTo(lastMonday.AddDays(7)));
 		}
 
 		[Test]
@@ -515,6 +572,19 @@ namespace Test.C4SC.Common
 		}
 
 		[Test]
+		[TestCase(4)]
+		[TestCase(8)]
+		[TestCase(12)]
+		[TestCase(24)]
+		public void it_should_add_weeks_to_a_date(Int32 arg)
+		{
+			DateTime kentuckyDerby	= new DateTime(2011, 5, 7);
+			DateTime actual			= arg.Weeks().From(kentuckyDerby);
+
+			Assert.That(actual, Is.EqualTo(kentuckyDerby.AddDays(arg * 7)));
+		}
+
+		[Test]
 		[TestCase(1)]
 		[TestCase(5)]
 		[TestCase(7)]
@@ -577,6 +647,7 @@ namespace Test.C4SC.Common
 
 			DateTime actual = 1.Year()
 							.And(1.Month())
+							.And(1.Week())
 							.And(1.Day())
 							.And(1.Minute())
 							.And(1.Second())
@@ -584,7 +655,7 @@ namespace Test.C4SC.Common
 
 			DateTime expected = twentyTwelve.AddYears(1)
 									.AddMonths(1)
-									.AddDays(1)
+									.AddDays(8)
 									.AddMinutes(1)
 									.AddSeconds(1)
 									.AddMilliseconds(1);
@@ -597,16 +668,17 @@ namespace Test.C4SC.Common
 		#region Plural Addition Methods - Chaining
 
 		[Test]
-		[TestCase(1, 2, 3, 4, 5, 6)]
-		[TestCase(2, 4, 6, 8, 10, 12)]
-		[TestCase(5, 10, 15, 20, 25, 30)]
-		[TestCase(100, 200, 300, 400, 500, 600)]
-		public void it_should_add_all_components_to_a_timestamp(Int32 years, Int32 months, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
+		[TestCase(1, 2, 2, 3, 4, 5, 6)]
+		[TestCase(2, 4, 3, 6, 8, 10, 12)]
+		[TestCase(5, 10, 4, 15, 20, 25, 30)]
+		[TestCase(100, 200, 5, 300, 400, 500, 600)]
+		public void it_should_add_all_components_to_a_timestamp(Int32 years, Int32 months, Int32 weeks, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
 		{
 			DateTime twentyTwelve = new DateTime(2012, 1, 1, 0, 0, 0, 0);
 
 			DateTime actual = years.Years()
 								.And(months.Months())
+								.And(weeks.Weeks())
 								.And(days.Days())
 								.And(minutes.Minutes())
 								.And(seconds.Seconds())
@@ -614,7 +686,7 @@ namespace Test.C4SC.Common
 
 			DateTime expected = twentyTwelve.AddYears(years)
 									.AddMonths(months)
-									.AddDays(days)
+									.AddDays(days + (weeks * 7))
 									.AddMinutes(minutes)
 									.AddSeconds(seconds)
 									.AddMilliseconds(milliseconds);
@@ -642,6 +714,15 @@ namespace Test.C4SC.Common
 			DateTime actual			= 1.Month().AgoFrom(kentuckyDerby);
 
 			Assert.That(actual, Is.EqualTo(kentuckyDerby.AddMonths(-1)));
+		}
+
+		[Test]
+		public void it_should_subtract_1_week_from_a_date()
+		{
+			DateTime lastMonday = new DateTime(2011, 11, 14);
+			DateTime actual		= 1.Week().AgoFrom(lastMonday);
+
+			Assert.That(actual, Is.EqualTo(lastMonday.AddDays(-7)));
 		}
 
 		[Test]
@@ -711,6 +792,19 @@ namespace Test.C4SC.Common
 		}
 
 		[Test]
+		[TestCase(2)]
+		[TestCase(4)]
+		[TestCase(6)]
+		[TestCase(12)]
+		public void it_should_subtract_weeks_from_a_date(Int32 arg)
+		{
+			DateTime lastMonday = new DateTime(2011, 11, 14);
+			DateTime actual		= arg.Weeks().AgoFrom(lastMonday);
+
+			Assert.That(actual, Is.EqualTo(lastMonday.AddDays(-(arg * 7))));
+		}
+
+		[Test]
 		[TestCase(1)]
 		[TestCase(5)]
 		[TestCase(7)]
@@ -773,6 +867,7 @@ namespace Test.C4SC.Common
 
 			DateTime actual = 1.Year()
 							.And(1.Month())
+							.And(1.Week())
 							.And(1.Day())
 							.And(1.Minute())
 							.And(1.Second())
@@ -780,7 +875,7 @@ namespace Test.C4SC.Common
 
 			DateTime expected = twentyTwelve.AddYears(-1)
 									.AddMonths(-1)
-									.AddDays(-1)
+									.AddDays(-8)
 									.AddMinutes(-1)
 									.AddSeconds(-1)
 									.AddMilliseconds(-1);
@@ -793,16 +888,17 @@ namespace Test.C4SC.Common
 		#region Plural Subtraction Methods - Chaining
 
 		[Test]
-		[TestCase(1, 2, 3, 4, 5, 6)]
-		[TestCase(2, 4, 6, 8, 10, 12)]
-		[TestCase(5, 10, 15, 20, 25, 30)]
-		[TestCase(100, 200, 300, 400, 500, 600)]
-		public void it_should_subtract_all_components_from_a_timestamp(Int32 years, Int32 months, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
+		[TestCase(1, 2, 2, 3, 4, 5, 6)]
+		[TestCase(2, 4, 3, 6, 8, 10, 12)]
+		[TestCase(5, 10, 4, 15, 20, 25, 30)]
+		[TestCase(100, 200, 5, 300, 400, 500, 600)]
+		public void it_should_subtract_all_components_from_a_timestamp(Int32 years, Int32 months, Int32 weeks, Int32 days, Int32 minutes, Int32 seconds, Int32 milliseconds)
 		{
 			DateTime twentyTwelve = new DateTime(2012, 1, 1, 0, 0, 0, 0);
 
 			DateTime actual = years.Years()
 								.And(months.Months())
+								.And(weeks.Weeks())
 								.And(days.Days())
 								.And(minutes.Minutes())
 								.And(seconds.Seconds())
@@ -810,7 +906,7 @@ namespace Test.C4SC.Common
 
 			DateTime expected = twentyTwelve.AddYears(-years)
 									.AddMonths(-months)
-									.AddDays(-days)
+									.AddDays(-days + -(weeks * 7))
 									.AddMinutes(-minutes)
 									.AddSeconds(-seconds)
 									.AddMilliseconds(-milliseconds);
