@@ -183,7 +183,7 @@ namespace Test.C4SC.Common
 	/// NUnit TestFixture providing unit test coverage of the C4SC port of the helpers in the Rails Date class. All 
 	/// tests in this suite require a testable DateTime.Now value.
 	/// </summary>
-	/// /// <remarks>
+	/// <remarks>
 	/// http://api.rubyonrails.org/classes/Date.html
 	/// </remarks>
 	[TestFixture]

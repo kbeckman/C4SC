@@ -7,7 +7,7 @@ namespace C4SC.Common
 	/// <summary>
 	/// DateTime extension methods. This class is a .NET partial port of the helper methods in the Rails Date class.
 	/// </summary>
-	/// /// <remarks>
+	/// <remarks>
 	/// http://api.rubyonrails.org/classes/Date.html
 	/// </remarks>
 	public static class DateTimeExtensions
