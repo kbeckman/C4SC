@@ -5,12 +5,12 @@ using System.Web.UI;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("C4SC.Common.WebControls")]
+[assembly: AssemblyTitle("C4SC.Web.UI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("C4SC")]
-[assembly: AssemblyProduct("C4SC.Common.WebControls")]
-[assembly: AssemblyCopyright("Copyright © C4SC 2011")]
+[assembly: AssemblyProduct("C4SC.Web.UI")]
+[assembly: AssemblyCopyright("Copyright © C4SC 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
