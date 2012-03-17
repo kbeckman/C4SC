@@ -9,7 +9,7 @@ request to fix whatever issue(s) you might encounter.
 
 ---
 ##C4SC.Core##
-C4SC.Common is a common library with functionality valuable to all types of .NET projects independent of development 
+C4SC.Core is a common library with functionality valuable to all types of .NET projects independent of development 
 platform. Types and classes in this library can be considered extensions, supplements or enhancements to functionality 
 found in the .NET Framework base libraries.
 <br/><br/>
