@@ -8,7 +8,7 @@ allowing for usage in either a C'# or VB.NET application. Please let me know if 
 request to fix whatever issue(s) you might encounter.
 
 ---
-##C4SC.Common##
+##C4SC.Core##
 C4SC.Common is a common library with functionality valuable to all types of .NET projects independent of development 
 platform. Types and classes in this library can be considered extensions, supplements or enhancements to functionality 
 found in the .NET Framework base libraries.
@@ -35,8 +35,8 @@ Provides a more English-like syntax for working with DateTime... This DSL was in
 	Boolean isFuture			= unknownDate.IsFuture();
 
 ---
-##C4SC.Common.WebControls##
-C4SC.Common.WebControls contains web controls useful in ASP.NET web forms projects.
+##C4SC.Web.UIs##
+C4SC.Web.UI contains various web controls and behavior useful in ASP.NET web forms projects.
 <br/><br/>
 
 ###GoogleAnalytics -- [C4SC post](http://www.coding4streetcred.com/blog/post/Add-Google-Analytics-to-your-ASPNET-WebForms-Application.aspx)
