@@ -1,6 +1,6 @@
 ﻿using System;
-using C4SC.Common;
-using C4SC.Common.Testability;
+using C4SC.Core;
+using C4SC.Core.Testability;
 using NUnit.Framework;
 
 namespace Test.C4SC.Common

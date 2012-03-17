@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace C4SC.Common.Testability
+namespace C4SC.Core.Testability
 {
 	/// <summary>
 	/// Defines a service for providing the DateTime.Now value. This can be used in testing scenarios to provide a 

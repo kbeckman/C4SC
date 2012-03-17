@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using C4SC.Common.Testability;
+using C4SC.Core.Testability;
 
-namespace C4SC.Common
+namespace C4SC.Core
 {
 	/// <summary>
 	/// DateTime extension methods. This class is a .NET partial port of the helper methods in the Rails Date class.

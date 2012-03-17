@@ -48,9 +48,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\C4SC.Common\C4SC.Common.csproj">
+    <ProjectReference Include="..\C4SC.Common\C4SC.Core.csproj">
       <Project>{B8497406-B68E-4DAE-8A61-88C81B361CDC}</Project>
-      <Name>C4SC.Common</Name>
+      <Name>C4SC.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

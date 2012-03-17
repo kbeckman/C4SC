@@ -1,7 +1,7 @@
 ﻿using System;
-using C4SC.Common.Testability;
+using C4SC.Core.Testability;
 
-namespace C4SC.Common
+namespace C4SC.Core
 {
 	/// <summary>
 	/// Immutable semantic model for C4SC DateTime DSL.
